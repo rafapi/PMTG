@@ -6,6 +6,7 @@ import torch
 
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
+from IPython.display import clear_output
 
 from src.tg_env import BasicTG
 from src.agent import DDPG
@@ -31,6 +32,7 @@ action_size = 4
 
 def plotter(reward_window, env, learned_x, learned_y):
     # Plot the data
+    clear_output(wait=True)
     plt.plot(reward_window)
     plt.ylabel('Cumulative Reward')
     plt.xlabel('Episode')
