@@ -29,40 +29,6 @@ state_size = 5
 action_size = 4
 
 
-def compute_path(env, agent, num_steps, reward_acc):
-    all_x = []
-    all_y = []
-
-    time = 0
-    current_state = env.reset()
-
-    while True:
-        action = []
-        action = agent.chooseAction(current_state)[0]
-
-        # observation, reward, done, info
-        next_state, reward, done, info = agent.step(action)
-        print(next_state)
-
-        all_x.append(next_state[1])
-        all_y.append(next_state[2])
-
-        # Update counters
-        num_steps = num_steps + 1
-        reward_acc = reward_acc + reward
-
-        if done == True:
-            env.handleGameEnd()
-            break
-
-        current_state = next_state
-        time = time + 1
-
-    time = 0
-    current_state = env.reset()
-    return all_x, all_y
-
-
 def plotter(reward_window, env, learned_x, learned_y):
     # Plot the data
     plt.plot(reward_window)
