@@ -7,7 +7,7 @@ import torch
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
 
-from path_env import optimalPath
+from tg_env import BasicTG
 from agent import DDPG
 from utils import ReplayMemory
 
@@ -78,7 +78,7 @@ def plotter(reward_window, env, learned_x, learned_y):
 
 
 def main():
-    env = optimalPath()
+    env = BasicTG()
 
     if random_seed is not None:
         torch.manual_seed(random_seed)

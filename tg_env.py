@@ -2,12 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class optimalPath:
-    '''
-       Generate a set of points that define a trajectory for the agent to
-       follow, It should ressemble the infinity symbol
-    '''
-
+class BasicTG:
     def __init__(self):
         self.numPts = 200
         self.totalTime = 1.0
@@ -35,13 +30,12 @@ class optimalPath:
             self.x[i] = next_x
             self.y[i] = next_y
 
-            self.degradePath()
+            self.degrade_path()
 
             self.a_x_history[i] = self.a_x
             self.a_y_history[i] = self.a_y
 
-    """Describe me"""
-    def computeTG_at_Index(self, time, a_x, a_y):
+    def compute_tg_at_index(self, time, a_x, a_y):
         time = (float(time)/self.numPts) * self.totalTime
         next_x = a_x * np.sin(2 * np.pi * time)
         next_y = (a_y/2.0) * (np.sin(2 * np.pi * time) * np.cos(2 * np.pi * time))
@@ -50,7 +44,7 @@ class optimalPath:
 
     """Change the parameters that determine the path so that the
     optimal path is not a perfect figure 8"""
-    def degradePath(self):
+    def degrade_path(self):
         self.a_x = self.a_x - (2 * self.a_x /self.numPts)/10.0
         self.a_y = self.a_y - (self.a_y / (2 * self.numPts))/10.0
 
@@ -76,7 +70,7 @@ class optimalPath:
         #self.currentIndex = self.currentIndex + 1
 
         # need to recompute the TG's at index value
-        x_tg, y_tg = self.computeTG_at_Index(self.currentIndex, new_a_x, new_a_y)
+        x_tg, y_tg = self.compute_tg_at_index(self.currentIndex, new_a_x, new_a_y)
 
         self.currentIndex = self.currentIndex + 1
         # [time, agent's_x, agent's_y, TG's a_x, TG's a_y]
@@ -87,8 +81,3 @@ class optimalPath:
         if (self.currentIndex >= self.numPts - 1):
             return True
         return False
-
-
-if __name__ == '__main__':
-    myPath = optimalPath()
-    myPath.view_plot()
