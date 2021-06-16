@@ -122,7 +122,7 @@ def main():
         if eval_every_N_episodes is not None and (i_episode + 1) % eval_every_N_episodes == 0:
             reward_average = np.mean(reward_window)
             reward_max = np.max(reward_window)
-            print('Episode {}\tAverage Score: {:.2f}\tMax: {:.1f}'.format(
+            print('\nEpisode {}\tAverage Score: {:.2f}\tMax: {:.1f}\n'.format(
                 i_episode, reward_average, reward_max))
             tb_writer.add_scalar('reward/average', reward_average, i_episode)
 
