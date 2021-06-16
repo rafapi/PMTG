@@ -1,8 +1,8 @@
 import numpy as np
 import random
 
-from models import Actor, Critic
-from utils import OUNoise, soft_update
+from src.models import Actor, Critic
+from src.utils import OUNoise, soft_update
 
 import torch
 import torch.nn.functional as F

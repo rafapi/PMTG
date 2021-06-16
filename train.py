@@ -7,9 +7,9 @@ import torch
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
 
-from tg_env import BasicTG
-from agent import DDPG
-from utils import ReplayMemory
+from src.tg_env import BasicTG
+from src.agent import DDPG
+from src.utils import ReplayMemory
 
 
 lr = 0.001
@@ -115,8 +115,8 @@ def main():
 
         print(
             f"Episode: {i_episode}, total_steps: {total_num_steps}, \
-                    episode steps: {episode_steps}, \
-                    return: {round(episode_reward, 2)}"
+              episode steps: {episode_steps}, \
+              return: {round(episode_reward, 2)}"
         )
 
         if eval_every_N_episodes is not None and (i_episode + 1) % eval_every_N_episodes == 0:
