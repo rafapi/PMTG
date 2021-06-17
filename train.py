@@ -6,7 +6,6 @@ import torch
 
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
-from IPython.display import clear_output
 
 from src.tg_env import BasicTG
 from src.agent import DDPG
@@ -32,17 +31,20 @@ action_size = 4
 
 def plotter(reward_window, env, learned_x, learned_y):
     # Plot the data
-    clear_output(wait=True)
-    plt.plot(reward_window)
-    plt.ylabel('Cumulative Reward')
-    plt.xlabel('Episode')
-    plt.show()
+    plt.close()
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+    ax1.set_ylabel('Cumulative Reward')
+    ax1.set_xlabel('Episode')
+    ax1.plot(reward_window)
 
-    plt.scatter(env.x, env.y)
-
-    # Compute the agent's path
-    plt.scatter(learned_x, learned_y)
-    plt.show()
+    # Draw referece fig
+    ax2.scatter(env.x, env.y)
+    # Draw the agent's path
+    ax2.set_ylabel('Y')
+    ax2.set_xlabel('X')
+    ax2.scatter(learned_x, learned_y)
+    plt.draw()
+    plt.pause(0.001)
 
 
 def main():
