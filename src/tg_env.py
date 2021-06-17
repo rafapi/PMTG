@@ -23,9 +23,9 @@ class BasicTG:
         self.a_y_history = np.zeros(self.num_pts)
 
         for i in range(self.num_pts):
-            nextTime = (float(i)/self.num_pts) * self.total_time
-            next_x = self.a_x * np.sin(2 * np.pi * nextTime)
-            next_y = (self.a_y/2.0) * (np.sin(2 * np.pi * nextTime) * np.cos(2 * np.pi * nextTime))
+            next_time = (float(i)/self.num_pts) * self.total_time
+            next_x = self.a_x * np.sin(2 * np.pi * next_time)
+            next_y = (self.a_y/2.0) * (np.sin(2 * np.pi * next_time) * np.cos(2 * np.pi * next_time))
 
             self.x[i] = next_x
             self.y[i] = next_y
@@ -43,8 +43,7 @@ class BasicTG:
         return next_x, next_y
 
     def degrade_path(self):
-        '''
-            Add some deformation to the infinity fig
+        '''Add some deformation to the infinity fig
         '''
         self.a_x = self.a_x - (2 * self.a_x / self.num_pts)/10.0
         self.a_y = self.a_y - (self.a_y / (2 * self.num_pts))/10.0
