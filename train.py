@@ -40,8 +40,8 @@ def plotter(reward_window, env, learned_x, learned_y):
     # Draw referece fig
     ax2.scatter(env.x, env.y)
     # Draw the agent's path
-    ax2.set_ylabel('Y')
-    ax2.set_xlabel('X')
+    ax2.set_ylabel('Y dimension')
+    ax2.set_xlabel('X dimension')
     ax2.scatter(learned_x, learned_y)
     plt.draw()
     plt.pause(0.001)
