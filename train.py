@@ -32,7 +32,7 @@ action_size = 4
 def plotter(reward_window, env, learned_x, learned_y):
     # Plot the data
     plt.close()
-    fig, (ax1, ax2) = plt.subplots(1, 2)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 7))
     ax1.set_ylabel('Cumulative Reward')
     ax1.set_xlabel('Episode')
     ax1.plot(reward_window)
