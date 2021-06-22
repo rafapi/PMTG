@@ -18,7 +18,7 @@ gamma = 0.99
 random_seed = 0
 replay_size = 1000000
 batch_size = 256
-num_steps = 1000000
+num_steps = 150000
 epsilon_start = 1.0
 epsilon_end = 0.01
 epsilon_decay = 0.98
@@ -29,12 +29,15 @@ state_size = 5
 action_size = 4
 
 
-def plotter(reward_window, env, learned_x, learned_y):
+def plotter(reward_window, env, learned_x, learned_y, i_episode):
     # Plot the data
     plt.close()
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 7))
     ax1.set_ylabel('Cumulative Reward')
     ax1.set_xlabel('Episode')
+    # remove spines
+    ax1.spines['right'].set_visible(False)
+    ax1.spines['top'].set_visible(False)
     ax1.plot(reward_window)
 
     # Draw referece fig
@@ -42,9 +45,16 @@ def plotter(reward_window, env, learned_x, learned_y):
     # Draw the agent's path
     ax2.set_ylabel('Y dimension')
     ax2.set_xlabel('X dimension')
+    # remove spines
+    ax2.spines['right'].set_visible(False)
+    ax2.spines['top'].set_visible(False)
     ax2.scatter(learned_x, learned_y)
-    plt.draw()
-    plt.pause(0.001)
+    # plt.draw()
+    # plt.pause(0.001)
+
+    bg_color = '#95A4AD'
+    filename = f'images/frame_{i_episode}.png'
+    plt.savefig(filename, dpi=96, facecolor=bg_color)
 
 
 def main():
@@ -80,11 +90,11 @@ def main():
         all_y = []
 
         state = env.reset()
-        # agent.reset()
+        agent.reset()
 
         while not done:
             action = agent.select_action(state, eps, add_noise=True)
-            next_state, reward, done, info = agent.step(env, action)
+            next_state, reward, done, _ = agent.step(env, action)
 
             memory.push(state, action, reward, next_state, done)
 
@@ -115,11 +125,12 @@ def main():
 
         tb_writer.add_scalar('reward/episode', episode_reward, i_episode)
 
-        plotter(reward_window, env, all_x, all_y)
+        if i_episode % 10:
+            plotter(reward_window, env, all_x, all_y, i_episode)
 
         print(
-            f"Episode: {i_episode}, total_steps: {total_num_steps}, \
-              episode steps: {episode_steps}, \
+            f"Episode: {i_episode}, total_steps: {total_num_steps} \
+              episode steps: {episode_steps} \
               return: {round(episode_reward, 2)}"
         )
 
@@ -129,8 +140,6 @@ def main():
             print('\nEpisode {}\tAverage Score: {:.2f}\tMax: {:.1f}\n'.format(
                 i_episode, reward_average, reward_max))
             tb_writer.add_scalar('reward/average', reward_average, i_episode)
-
-    env.close()
 
 
 if __name__ == '__main__':
